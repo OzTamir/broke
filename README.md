@@ -14,7 +14,7 @@
     <a href="https://github.com/OzTamir/broke/issues">Request Feature</a>
   </p>
 </div>
-Welcome to Broke, an open-source alternative to [Brick](https://getbrick.app) that lets you experience minimalist smartphone use.
+Welcome to Broke, an open-source alternative to Brick that lets you experience minimalist smartphone use.
 Inspired by Brick's mission to help users reduce distractions, Broke offers a streamlined approach to limiting your smartphone's functionality.
 
 ### Acknowledgments
