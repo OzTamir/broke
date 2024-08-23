@@ -18,29 +18,42 @@ struct BrokerView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                Circle()
-                    .fill(appBlocker.isBlocking ? Color.red : Color.green)
-                    .frame(width: 200, height: 200)
-                    .overlay(
-                        Text(appBlocker.isBlocking ? "Scan Tag to Unblock" : "Scan Tag to Block")
-                            .foregroundColor(.white)
-                            .font(.headline)
-                    )
-                    .onTapGesture {
-                        nfcReader.scan { payload in
-                            // Check the payload and toggle appBlocker if condition is met
-                            if payload == tagPhrase {
-                                NSLog("Toggling block")
-                                appBlocker.toggleBlocking(for: profileManager.currentProfile)
-                            } else {
-                                showWrongTagAlert = true
-                                NSLog("Wrong Tag!\nPayload: \(payload)")
+            VStack {
+                ZStack {
+                    Circle()
+                        .fill(appBlocker.isBlocking ? Color.red : Color.green)
+                        .frame(width: 200, height: 200)
+                        .overlay(
+                            Text(appBlocker.isBlocking ? "Scan Tag to Unblock" : "Scan Tag to Block")
+                                .foregroundColor(.white)
+                                .font(.headline)
+                        )
+                        .onTapGesture {
+                            nfcReader.scan { payload in
+                                if payload == tagPhrase {
+                                    NSLog("Toggling block")
+                                    appBlocker.toggleBlocking(for: profileManager.currentProfile)
+                                } else {
+                                    showWrongTagAlert = true
+                                    NSLog("Wrong Tag!\nPayload: \(payload)")
+                                }
                             }
                         }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
+                        ForEach(profileManager.profiles) { profile in
+                            ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfile.id)
+                                .onTapGesture {
+                                    profileManager.setCurrentProfile(id: profile.id)
+                                }
+                        }
                     }
+                    .padding()
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(UIColor.systemBackground))
             .navigationBarItems(trailing: createTagButton)
             .alert(isPresented: $showWrongTagAlert) {
@@ -78,5 +91,29 @@ struct BrokerView: View {
             nfcWriteSuccess = !success
             showCreateTagAlert = false
         }
+    }
+}
+
+struct ProfileCell: View {
+    let profile: Profile
+    let isSelected: Bool
+
+    var body: some View {
+        VStack {
+            Image(systemName: profile.icon)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 50, height: 50)
+            Text(profile.name)
+                .font(.caption)
+                .lineLimit(1)
+        }
+        .frame(width: 100, height: 100)
+        .background(isSelected ? Color.blue.opacity(0.3) : Color.secondary.opacity(0.2))
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+        )
     }
 }

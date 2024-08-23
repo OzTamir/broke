@@ -27,7 +27,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create a default profile if no profiles are saved
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [])
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "house.circle")
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }
@@ -47,8 +47,8 @@ class ProfileManager: ObservableObject {
         UserDefaults.standard.set(currentProfileId?.uuidString, forKey: "currentProfileId")
     }
     
-    func addProfile(name: String) {
-        let newProfile = Profile(name: name, appTokens: [], categoryTokens: [])
+    func addProfile(name: String, icon: String = "person.circle") {
+        let newProfile = Profile(name: name, appTokens: [], categoryTokens: [], icon: icon)
         profiles.append(newProfile)
         currentProfileId = newProfile.id
         saveProfiles()
@@ -63,9 +63,10 @@ class ProfileManager: ObservableObject {
     }
     
     func setCurrentProfile(id: UUID) {
-        guard profiles.contains(where: { $0.id == id }) else { return }
-        currentProfileId = id
-        saveProfiles()
+        if profiles.contains(where: { $0.id == id }) {
+            currentProfileId = id
+            saveProfiles()
+        }
     }
     
     func deleteProfile(withId id: UUID) {
@@ -99,8 +100,17 @@ struct Profile: Identifiable, Codable {
     var name: String
     var appTokens: Set<ApplicationToken>
     var categoryTokens: Set<ActivityCategoryToken>
-    
+    var icon: String // New property for icon
+
     var isDefault: Bool {
         name == "Default"
+    }
+
+    // New initializer to support default icon
+    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "person.circle") {
+        self.name = name
+        self.appTokens = appTokens
+        self.categoryTokens = categoryTokens
+        self.icon = icon
     }
 }
