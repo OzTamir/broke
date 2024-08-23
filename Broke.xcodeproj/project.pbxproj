@@ -13,6 +13,9 @@
 		F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */; };
 		F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */; };
 		F51C38E12C77DADA003B4EB3 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */; };
+		F51C38E42C77E847003B4EB3 /* SFSymbolsPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F51C38E32C77E847003B4EB3 /* SFSymbolsPicker */; };
+		F51C38E62C787796003B4EB3 /* AddProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38E52C787796003B4EB3 /* AddProfileView.swift */; };
+		F51C38E82C78ADB5003B4EB3 /* ProfilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38E72C78ADB5003B4EB3 /* ProfilePicker.swift */; };
 		F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */; };
 		F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B0602C733E3400BD6C7F /* MainView.swift */; };
 		F5A3B0632C733E3500BD6C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A3B0622C733E3500BD6C7F /* Assets.xcassets */; };
@@ -27,6 +30,8 @@
 		F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrockerView.swift; sourceTree = "<group>"; };
 		F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		F51C38E52C787796003B4EB3 /* AddProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProfileView.swift; sourceTree = "<group>"; };
+		F51C38E72C78ADB5003B4EB3 /* ProfilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicker.swift; sourceTree = "<group>"; };
 		F5A3B05B2C733E3400BD6C7F /* Broke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Broke.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeApp.swift; sourceTree = "<group>"; };
 		F5A3B0602C733E3400BD6C7F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -41,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F51C38D22C775953003B4EB3 /* CoreNFC.framework in Frameworks */,
+				F51C38E42C77E847003B4EB3 /* SFSymbolsPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +64,6 @@
 		F5A3B0522C733E3400BD6C7F = {
 			isa = PBXGroup;
 			children = (
-				F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */,
 				F5A3B05D2C733E3400BD6C7F /* Broke */,
 				F5A3B05C2C733E3400BD6C7F /* Products */,
 				F51C38CF2C77594E003B4EB3 /* Frameworks */,
@@ -78,10 +83,13 @@
 			children = (
 				F51C38D52C775AAF003B4EB3 /* Info.plist */,
 				F5A3B06C2C733EA200BD6C7F /* Broke.entitlements */,
+				F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */,
+				F51C38E72C78ADB5003B4EB3 /* ProfilePicker.swift */,
 				F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */,
 				F5A3B0602C733E3400BD6C7F /* MainView.swift */,
 				F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */,
 				F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */,
+				F51C38E52C787796003B4EB3 /* AddProfileView.swift */,
 				F51C38D82C775CEC003B4EB3 /* NfcReader.swift */,
 				F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */,
 				F5A3B0622C733E3500BD6C7F /* Assets.xcassets */,
@@ -114,6 +122,9 @@
 			dependencies = (
 			);
 			name = Broke;
+			packageProductDependencies = (
+				F51C38E32C77E847003B4EB3 /* SFSymbolsPicker */,
+			);
 			productName = Broke;
 			productReference = F5A3B05B2C733E3400BD6C7F /* Broke.app */;
 			productType = "com.apple.product-type.application";
@@ -142,6 +153,9 @@
 				Base,
 			);
 			mainGroup = F5A3B0522C733E3400BD6C7F;
+			packageReferences = (
+				F51C38E22C77E847003B4EB3 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */,
+			);
 			productRefGroup = F5A3B05C2C733E3400BD6C7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -172,8 +186,10 @@
 				F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */,
 				F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */,
 				F51C38E12C77DADA003B4EB3 /* ProfileManager.swift in Sources */,
+				F51C38E62C787796003B4EB3 /* AddProfileView.swift in Sources */,
 				F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */,
 				F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */,
+				F51C38E82C78ADB5003B4EB3 /* ProfilePicker.swift in Sources */,
 				F51C38D72C775CAF003B4EB3 /* AppBlocker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +409,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F51C38E22C77E847003B4EB3 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alessiorubicini/SFSymbolsPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F51C38E32C77E847003B4EB3 /* SFSymbolsPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F51C38E22C77E847003B4EB3 /* XCRemoteSwiftPackageReference "SFSymbolsPicker" */;
+			productName = SFSymbolsPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5A3B0532C733E3400BD6C7F /* Project object */;
 }

@@ -6,6 +6,9 @@
 //
 import SwiftUI
 import CoreNFC
+import SFSymbolsPicker
+import FamilyControls
+import ManagedSettings
 
 struct BrokerView: View {
     @ObservedObject var appBlocker: AppBlocker
@@ -14,47 +17,33 @@ struct BrokerView: View {
     @State private var showWrongTagAlert = false
     @State private var showCreateTagAlert = false
     @State private var nfcWriteSuccess = false
+    @State private var showAddProfileAlert = false
     public var tagPhrase: String
+    
+    private var isBlocking : Bool {
+        get {
+            return appBlocker.isBlocking
+        }
+    }
     
     var body: some View {
         NavigationView {
-            VStack {
+            GeometryReader { geometry in
                 ZStack {
-                    Circle()
-                        .fill(appBlocker.isBlocking ? Color.red : Color.green)
-                        .frame(width: 200, height: 200)
-                        .overlay(
-                            Text(appBlocker.isBlocking ? "Scan Tag to Unblock" : "Scan Tag to Block")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                        )
-                        .onTapGesture {
-                            nfcReader.scan { payload in
-                                if payload == tagPhrase {
-                                    NSLog("Toggling block")
-                                    appBlocker.toggleBlocking(for: profileManager.currentProfile)
-                                } else {
-                                    showWrongTagAlert = true
-                                    NSLog("Wrong Tag!\nPayload: \(payload)")
-                                }
-                            }
-                        }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
-                        ForEach(profileManager.profiles) { profile in
-                            ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfile.id)
-                                .onTapGesture {
-                                    profileManager.setCurrentProfile(id: profile.id)
-                                }
+                    VStack(spacing: 0) {
+                        blockOrUnblockButton(geometry: geometry)
+                        
+                        if !isBlocking {
+                            Divider()
+                            
+                            ProfilesPicker(profileManager: profileManager, showAddProfileAlert: $showAddProfileAlert)
+                                .frame(height: geometry.size.height / 2)
+                                .transition(.move(edge: .bottom))
                         }
                     }
-                    .padding()
+                    .background(isBlocking ? Color("BlockingBackground") : Color("NonBlockingBackground"))
                 }
             }
-            .background(Color(UIColor.systemBackground))
             .navigationBarItems(trailing: createTagButton)
             .alert(isPresented: $showWrongTagAlert) {
                 Alert(
@@ -74,6 +63,52 @@ struct BrokerView: View {
             } message: {
                 Text(nfcWriteSuccess ? "Broker tag created successfully!" : "Failed to create Broker tag. Please try again.")
             }
+            .sheet(isPresented: $showAddProfileAlert) {
+                AddProfileView(
+                    onSave: addProfile,
+                    onCancel: {
+                        showAddProfileAlert = false
+                    }
+                )
+            }
+        }
+        .animation(.spring(), value: isBlocking)
+    }
+    
+    @ViewBuilder
+    private func blockOrUnblockButton(geometry: GeometryProxy) -> some View {
+        VStack(spacing: 8) {
+            Text(isBlocking ? "Tap to unblock" : "Tap to block")
+                .font(.caption)
+                .opacity(0.75)
+                .transition(.scale)
+            
+            Button(action: {
+                withAnimation(.spring()) {
+                    scanTag()
+                }
+            }) {
+                Image(isBlocking ? "RedIcon" : "GreenIcon")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: geometry.size.height / 3)
+            }
+            .transition(.scale)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(height: isBlocking ? geometry.size.height : geometry.size.height / 2)
+        .animation(.spring(), value: isBlocking)
+    }
+    
+    private func scanTag() {
+        nfcReader.scan { payload in
+            if payload == tagPhrase {
+                NSLog("Toggling block")
+                appBlocker.toggleBlocking(for: profileManager.currentProfile)
+            } else {
+                showWrongTagAlert = true
+                NSLog("Wrong Tag!\nPayload: \(payload)")
+            }
         }
     }
     
@@ -92,28 +127,10 @@ struct BrokerView: View {
             showCreateTagAlert = false
         }
     }
-}
-
-struct ProfileCell: View {
-    let profile: Profile
-    let isSelected: Bool
-
-    var body: some View {
-        VStack {
-            Image(systemName: profile.icon)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-            Text(profile.name)
-                .font(.caption)
-                .lineLimit(1)
-        }
-        .frame(width: 100, height: 100)
-        .background(isSelected ? Color.blue.opacity(0.3) : Color.secondary.opacity(0.2))
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
-        )
+    
+    private func addProfile(newProfile: Profile) {
+        guard !newProfile.name.isEmpty else { return }
+        profileManager.addProfile(newProfile: newProfile)
+        showAddProfileAlert = false
     }
 }

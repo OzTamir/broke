@@ -1,19 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "1024.png",
+      "filename" : "Icon (3).png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
     },
     {
-      "filename" : "iTunesArtwork@2x.png",
+      "filename" : "512.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "iTunesArtwork@1x.png",
+      "filename" : "512 1.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"

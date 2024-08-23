@@ -54,6 +54,12 @@ class ProfileManager: ObservableObject {
         saveProfiles()
     }
     
+    func addProfile(newProfile: Profile) {
+        profiles.append(newProfile)
+        currentProfileId = newProfile.id
+        saveProfiles()
+    }
+    
     func updateCurrentProfile(appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>) {
         if let index = profiles.firstIndex(where: { $0.id == currentProfileId }) {
             profiles[index].appTokens = appTokens
@@ -91,6 +97,22 @@ class ProfileManager: ObservableObject {
             currentProfileId = profiles.first?.id
         }
         
+        saveProfiles()
+    }
+    
+    func updateCurrentProfile(name: String, iconName: String) {
+        if let index = profiles.firstIndex(where: { $0.id == currentProfileId }) {
+            profiles[index].name = name
+            profiles[index].icon = iconName
+            saveProfiles()
+        }
+    }
+
+    func deleteCurrentProfile() {
+        profiles.removeAll { $0.id == currentProfileId }
+        if let firstProfile = profiles.first {
+            currentProfileId = firstProfile.id
+        }
         saveProfiles()
     }
 }
