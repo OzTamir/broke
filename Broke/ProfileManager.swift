@@ -15,6 +15,7 @@ class ProfileManager: ObservableObject {
     
     init() {
         loadProfiles()
+        ensureDefaultProfile()
     }
     
     var currentProfile: Profile {
@@ -35,8 +36,10 @@ class ProfileManager: ObservableObject {
         if let savedProfileId = UserDefaults.standard.string(forKey: "currentProfileId"),
            let uuid = UUID(uuidString: savedProfileId) {
             currentProfileId = uuid
+            NSLog("Found currentProfile: \(uuid)")
         } else {
             currentProfileId = profiles.first?.id
+            NSLog("No stored ID, using \(currentProfileId?.uuidString ?? "NONE")")
         }
     }
     
@@ -71,6 +74,7 @@ class ProfileManager: ObservableObject {
     func setCurrentProfile(id: UUID) {
         if profiles.contains(where: { $0.id == id }) {
             currentProfileId = id
+            NSLog("New Current Profile: \(id)")
             saveProfiles()
         }
     }
@@ -115,10 +119,55 @@ class ProfileManager: ObservableObject {
         }
         saveProfiles()
     }
+    
+    func updateProfile(
+        id: UUID,
+        name: String? = nil,
+        appTokens: Set<ApplicationToken>? = nil,
+        categoryTokens: Set<ActivityCategoryToken>? = nil,
+        icon: String? = nil
+    ) {
+        if let index = profiles.firstIndex(where: { $0.id == id }) {
+            if let name = name {
+                profiles[index].name = name
+            }
+            if let appTokens = appTokens {
+                profiles[index].appTokens = appTokens
+            }
+            if let categoryTokens = categoryTokens {
+                profiles[index].categoryTokens = categoryTokens
+            }
+            if let icon = icon {
+                profiles[index].icon = icon
+            }
+            
+            if currentProfileId == id {
+                currentProfileId = profiles[index].id
+            }
+            
+            saveProfiles()
+        }
+    }
+    
+    private func ensureDefaultProfile() {
+        if profiles.isEmpty {
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "house.circle")
+            profiles.append(defaultProfile)
+            currentProfileId = defaultProfile.id
+            saveProfiles()
+        } else if currentProfileId == nil {
+            if let defaultProfile = profiles.first(where: { $0.name == "Default" }) {
+                currentProfileId = defaultProfile.id
+            } else {
+                currentProfileId = profiles.first?.id
+            }
+            saveProfiles()
+        }
+    }
 }
 
 struct Profile: Identifiable, Codable {
-    let id = UUID()
+    let id: UUID
     var name: String
     var appTokens: Set<ApplicationToken>
     var categoryTokens: Set<ActivityCategoryToken>
@@ -130,9 +179,11 @@ struct Profile: Identifiable, Codable {
 
     // New initializer to support default icon
     init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "person.circle") {
+        self.id = UUID()
         self.name = name
         self.appTokens = appTokens
         self.categoryTokens = categoryTokens
         self.icon = icon
+
     }
 }

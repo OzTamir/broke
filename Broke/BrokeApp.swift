@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct BrokeApp: App {
+    @StateObject private var appBlocker = AppBlocker()
+    @StateObject private var profileManager = ProfileManager()
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            BrokerView()
+                .environmentObject(appBlocker)
+                .environmentObject(profileManager)
         }
     }
 }

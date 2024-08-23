@@ -6,39 +6,90 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct ProfilesPicker: View {
     @ObservedObject var profileManager: ProfileManager
-    @Binding var showAddProfileAlert: Bool
+    @State private var showAddProfileView = false
+    @State private var editingProfile: Profile?
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Profiles")
-                    .font(.headline)
-                Spacer()
-                Button(action: {
-                    showAddProfileAlert = true
-                }) {
-                    Image(systemName: "plus")
-                }
-            }
-            .padding(.horizontal)
-            .padding(.top)
+            Text("Profiles")
+                .font(.headline)
+                .padding(.horizontal)
+                .padding(.top)
             
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 10)], spacing: 10) {
                     ForEach(profileManager.profiles) { profile in
-                        ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfile.id)
+                        ProfileCell(profile: profile, isSelected: profile.id == profileManager.currentProfileId)
                             .onTapGesture {
                                 profileManager.setCurrentProfile(id: profile.id)
                             }
+                            .onLongPressGesture {
+                                editingProfile = profile
+                            }
                     }
+                    
+                    ProfileCellBase(name: "New...", icon: "plus", appsBlocked: nil, categoriesBlocked: nil, isSelected: false, isDashed: true)
+                        .onTapGesture {
+                            showAddProfileView = true
+                        }
                 }
-                .padding()
+                .padding(.horizontal, 10)
             }
         }
         .background(Color("ProfileSectionBackground"))
+        .sheet(item: $editingProfile) { profile in
+            ProfileFormView(profile: profile, profileManager: profileManager) {
+                editingProfile = nil
+            }
+        }
+        .sheet(isPresented: $showAddProfileView) {
+            ProfileFormView(profileManager: profileManager) {
+                showAddProfileView = false
+            }
+        }
+    }
+}
+
+struct ProfileCellBase: View {
+    let name: String
+    let icon: String
+    let appsBlocked: Int?
+    let categoriesBlocked: Int?
+    let isSelected: Bool
+    var isDashed: Bool = false
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 30, height: 30)
+            Divider().padding(2)
+            Text(name)
+                .font(.caption)
+                .fontWeight(.medium)
+                .lineLimit(1)
+            
+            if let apps = appsBlocked, let categories = categoriesBlocked {
+                Text("A: \(apps) | C: \(categories)")
+                    .font(.system(size: 10))
+            }
+        }
+        .frame(width: 90, height: 90)
+        .padding(2)
+        .background(isSelected ? Color.blue.opacity(0.3) : Color.secondary.opacity(0.2))
+        .cornerRadius(8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(
+                    isSelected ? Color.blue : (isDashed ? Color.secondary : Color.clear),
+                    style: StrokeStyle(lineWidth: 2, dash: isDashed ? [5] : [])
+                )
+        )
     }
 }
 
@@ -47,21 +98,12 @@ struct ProfileCell: View {
     let isSelected: Bool
 
     var body: some View {
-        VStack {
-            Image(systemName: profile.icon)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-            Text(profile.name)
-                .font(.caption)
-                .lineLimit(1)
-        }
-        .frame(width: 100, height: 100)
-        .background(isSelected ? Color.blue.opacity(0.3) : Color.secondary.opacity(0.2))
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+        ProfileCellBase(
+            name: profile.name,
+            icon: profile.icon,
+            appsBlocked: profile.appTokens.count,
+            categoriesBlocked: profile.categoryTokens.count,
+            isSelected: isSelected
         )
     }
 }

@@ -11,14 +11,14 @@ import FamilyControls
 import ManagedSettings
 
 struct BrokerView: View {
-    @ObservedObject var appBlocker: AppBlocker
-    @ObservedObject var nfcReader: NFCReader
-    @ObservedObject var profileManager: ProfileManager
+    @EnvironmentObject private var appBlocker: AppBlocker
+    @EnvironmentObject private var profileManager: ProfileManager
+    @StateObject private var nfcReader = NFCReader()
+    private let tagPhrase = "BROKE-IS-GREAT"
+    
     @State private var showWrongTagAlert = false
     @State private var showCreateTagAlert = false
     @State private var nfcWriteSuccess = false
-    @State private var showAddProfileAlert = false
-    public var tagPhrase: String
     
     private var isBlocking : Bool {
         get {
@@ -36,7 +36,7 @@ struct BrokerView: View {
                         if !isBlocking {
                             Divider()
                             
-                            ProfilesPicker(profileManager: profileManager, showAddProfileAlert: $showAddProfileAlert)
+                            ProfilesPicker(profileManager: profileManager)
                                 .frame(height: geometry.size.height / 2)
                                 .transition(.move(edge: .bottom))
                         }
@@ -62,14 +62,6 @@ struct BrokerView: View {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text(nfcWriteSuccess ? "Broker tag created successfully!" : "Failed to create Broker tag. Please try again.")
-            }
-            .sheet(isPresented: $showAddProfileAlert) {
-                AddProfileView(
-                    onSave: addProfile,
-                    onCancel: {
-                        showAddProfileAlert = false
-                    }
-                )
             }
         }
         .animation(.spring(), value: isBlocking)
@@ -126,11 +118,5 @@ struct BrokerView: View {
             nfcWriteSuccess = !success
             showCreateTagAlert = false
         }
-    }
-    
-    private func addProfile(newProfile: Profile) {
-        guard !newProfile.name.isEmpty else { return }
-        profileManager.addProfile(newProfile: newProfile)
-        showAddProfileAlert = false
     }
 }

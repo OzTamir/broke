@@ -14,6 +14,7 @@ class AppBlocker: ObservableObject {
     @Published var isAuthorized = false
     
     init() {
+        loadBlockingState()
         Task {
             await requestAuthorization()
         }
@@ -40,10 +41,11 @@ class AppBlocker: ObservableObject {
         }
         
         isBlocking.toggle()
+        saveBlockingState()
         applyBlockingSettings(for: profile)
     }
     
-    private func applyBlockingSettings(for profile: Profile) {
+    func applyBlockingSettings(for profile: Profile) {
         if isBlocking {
             NSLog("Blocking \(profile.appTokens.count) apps")
             store.shield.applications = profile.appTokens.isEmpty ? nil : profile.appTokens
@@ -52,5 +54,13 @@ class AppBlocker: ObservableObject {
             store.shield.applications = nil
             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.none
         }
+    }
+    
+    private func loadBlockingState() {
+        isBlocking = UserDefaults.standard.bool(forKey: "isBlocking")
+    }
+    
+    private func saveBlockingState() {
+        UserDefaults.standard.set(isBlocking, forKey: "isBlocking")
     }
 }
