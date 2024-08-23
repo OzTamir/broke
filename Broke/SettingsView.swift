@@ -12,15 +12,11 @@ import CoreNFC
 
 struct SettingsView: View {
     @ObservedObject var appBlocker: AppBlocker
-    @StateObject private var nfcReader = NFCReader()
     @State private var showingFamilyActivityPicker = false
     @State private var activitySelection: FamilyActivitySelection
-    @State private var nfcWriteSuccess = false
-    public var tagPhrase: String
     
-    init(appBlocker: AppBlocker, tagPhrase: String) {
+    init(appBlocker: AppBlocker) {
         self.appBlocker = appBlocker
-        self.tagPhrase = tagPhrase
         
         var selection = FamilyActivitySelection()
         selection.applicationTokens = appBlocker.appTokens
@@ -59,18 +55,6 @@ struct SettingsView: View {
                         .cornerRadius(10)
                 }
             }
-            
-            if NFCNDEFReaderSession.readingAvailable {
-                Button(action: {
-                    createBrokerTag()
-                }) {
-                    Text("Create Broker Tag")
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
         }
         .sheet(isPresented: $showingFamilyActivityPicker) {
             NavigationView {
@@ -87,11 +71,5 @@ struct SettingsView: View {
     private func handleSelectedActivities() {
         appBlocker.appTokens = activitySelection.applicationTokens
         appBlocker.categoryTokens = activitySelection.categoryTokens
-    }
-    
-    private func createBrokerTag() {
-        nfcReader.write(tagPhrase) { success in
-            nfcWriteSuccess = success
-        }
     }
 }

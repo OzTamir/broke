@@ -12,7 +12,7 @@ struct MainView: View {
                     Label("Broker", systemImage: "lock.shield")
                 }
             
-            SettingsView(appBlocker: appBlocker, tagPhrase: tagPhrase)
+            SettingsView(appBlocker: appBlocker)
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
