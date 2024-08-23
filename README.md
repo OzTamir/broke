@@ -28,6 +28,15 @@ Out of respect to the original team, Broke is not available on the app store for
 * Supports multiple profiles
 * Allows creating a Broke-compatible tags (requires a physical tag)
 
+## Creating a Broke tag
+To create a tag, you need to get a physical NFC tag - any tag compatible with iOS will do the trick - I used an NTAG213.
+
+I also created a 3D-printable model to carry tags around or stick them on the fridge - check it out [here](https://www.printables.com/model/983618-broke-tag-nfc-tag-cover-with-keychain-and-magnet-h).
+
+![tag](https://github.com/user-attachments/assets/7c961db0-7746-46c3-8fd2-17739ead49c1)
+
+Once you have a tag, you can use the interface of the Broke up to turn it into a tag - it will write a simple phrase that can be detected by the app to block/unblock.
+
 ## Getting Started
 To use Broke, follow these steps:
 * Clone the repository.
