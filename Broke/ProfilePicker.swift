@@ -32,13 +32,20 @@ struct ProfilesPicker: View {
                             }
                     }
                     
-                    ProfileCellBase(name: "New...", icon: "plus", appsBlocked: nil, categoriesBlocked: nil, isSelected: false, isDashed: true)
+                    ProfileCellBase(name: "New...", icon: "plus", appsBlocked: nil, categoriesBlocked: nil, isSelected: false, isDashed: true, hasDivider: false)
                         .onTapGesture {
                             showAddProfileView = true
                         }
                 }
                 .padding(.horizontal, 10)
             }
+            
+            Spacer()
+            
+            Text("Long press on a profile to edit...")
+                .font(.caption2)
+                .foregroundColor(.secondary.opacity(0.7))
+                .padding(.bottom, 8)
         }
         .background(Color("ProfileSectionBackground"))
         .sheet(item: $editingProfile) { profile in
@@ -61,6 +68,7 @@ struct ProfileCellBase: View {
     let categoriesBlocked: Int?
     let isSelected: Bool
     var isDashed: Bool = false
+    var hasDivider: Bool = true
 
     var body: some View {
         VStack(spacing: 4) {
@@ -68,7 +76,9 @@ struct ProfileCellBase: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
-            Divider().padding(2)
+            if hasDivider {
+                Divider().padding(2)
+            }
             Text(name)
                 .font(.caption)
                 .fontWeight(.medium)

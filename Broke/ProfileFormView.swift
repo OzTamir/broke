@@ -25,7 +25,7 @@ struct ProfileFormView: View {
         self.profileManager = profileManager
         self.onDismiss = onDismiss
         _profileName = State(initialValue: profile?.name ?? "")
-        _profileIcon = State(initialValue: profile?.icon ?? "person.circle")
+        _profileIcon = State(initialValue: profile?.icon ?? "bell.slash")
         
         var selection = FamilyActivitySelection()
         selection.applicationTokens = profile?.appTokens ?? []
@@ -36,24 +36,58 @@ struct ProfileFormView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Profile Name", text: $profileName)
-                
-                Button(action: { showSymbolsPicker = true }) {
-                    HStack {
-                        Text("Choose Icon")
-                        Spacer()
-                        Image(systemName: profileIcon)
+                Section(header: Text("Profile Details")) {
+                    VStack(alignment: .leading) {
+                        Text("Profile Name")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        TextField("Enter profile name", text: $profileName)
+                    }
+                    
+                    Button(action: { showSymbolsPicker = true }) {
+                        HStack {
+                            Image(systemName: profileIcon)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                            Text("Choose Icon")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
                     }
                 }
                 
-                Button(action: { showAppSelection = true }) {
-                    Text("Configure Blocked Apps and Categories")
+                Section(header: Text("App Configuration")) {
+                    Button(action: { showAppSelection = true }) {
+                        Text("Configure Blocked Apps")
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Blocked Apps:")
+                            Spacer()
+                            Text("\(activitySelection.applicationTokens.count)")
+                                .fontWeight(.bold)
+                        }
+                        HStack {
+                            Text("Blocked Categories:")
+                            Spacer()
+                            Text("\(activitySelection.categoryTokens.count)")
+                                .fontWeight(.bold)
+                        }
+                        Text("Broke can't list the names of the apps due to privacy concerns, it is only able to see the amount of apps selected in the configuration screen.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 if profile != nil {
-                    Button(action: { showDeleteConfirmation = true }) {
-                        Text("Delete Profile")
-                            .foregroundColor(.red)
+                    Section {
+                        Button(action: { showDeleteConfirmation = true }) {
+                            Text("Delete Profile")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
             }

@@ -28,7 +28,7 @@ class ProfileManager: ObservableObject {
             profiles = decodedProfiles
         } else {
             // Create a default profile if no profiles are saved
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "house.circle")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "bell.slash")
             profiles = [defaultProfile]
             currentProfileId = defaultProfile.id
         }
@@ -50,7 +50,7 @@ class ProfileManager: ObservableObject {
         UserDefaults.standard.set(currentProfileId?.uuidString, forKey: "currentProfileId")
     }
     
-    func addProfile(name: String, icon: String = "person.circle") {
+    func addProfile(name: String, icon: String = "bell.slash") {
         let newProfile = Profile(name: name, appTokens: [], categoryTokens: [], icon: icon)
         profiles.append(newProfile)
         currentProfileId = newProfile.id
@@ -151,7 +151,7 @@ class ProfileManager: ObservableObject {
     
     private func ensureDefaultProfile() {
         if profiles.isEmpty {
-            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "house.circle")
+            let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "bell.slash")
             profiles.append(defaultProfile)
             currentProfileId = defaultProfile.id
             saveProfiles()
@@ -178,12 +178,11 @@ struct Profile: Identifiable, Codable {
     }
 
     // New initializer to support default icon
-    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "person.circle") {
+    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "bell.slash") {
         self.id = UUID()
         self.name = name
         self.appTokens = appTokens
         self.categoryTokens = categoryTokens
         self.icon = icon
-
     }
 }
