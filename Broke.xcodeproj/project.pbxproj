@@ -12,6 +12,7 @@
 		F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38D82C775CEC003B4EB3 /* NfcReader.swift */; };
 		F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */; };
 		F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */; };
+		F51C38E12C77DADA003B4EB3 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */; };
 		F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */; };
 		F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B0602C733E3400BD6C7F /* MainView.swift */; };
 		F5A3B0632C733E3500BD6C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A3B0622C733E3500BD6C7F /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		F51C38D82C775CEC003B4EB3 /* NfcReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NfcReader.swift; sourceTree = "<group>"; };
 		F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrockerView.swift; sourceTree = "<group>"; };
 		F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 		F5A3B05B2C733E3400BD6C7F /* Broke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Broke.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeApp.swift; sourceTree = "<group>"; };
 		F5A3B0602C733E3400BD6C7F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 		F5A3B0522C733E3400BD6C7F = {
 			isa = PBXGroup;
 			children = (
+				F51C38E02C77DADA003B4EB3 /* ProfileManager.swift */,
 				F5A3B05D2C733E3400BD6C7F /* Broke */,
 				F5A3B05C2C733E3400BD6C7F /* Products */,
 				F51C38CF2C77594E003B4EB3 /* Frameworks */,
@@ -168,6 +171,7 @@
 				F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */,
 				F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */,
 				F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */,
+				F51C38E12C77DADA003B4EB3 /* ProfileManager.swift in Sources */,
 				F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */,
 				F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */,
 				F51C38D72C775CAF003B4EB3 /* AppBlocker.swift in Sources */,

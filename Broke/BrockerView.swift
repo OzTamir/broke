@@ -10,6 +10,7 @@ import CoreNFC
 struct BrokerView: View {
     @ObservedObject var appBlocker: AppBlocker
     @ObservedObject var nfcReader: NFCReader
+    @ObservedObject var profileManager: ProfileManager
     @State private var showWrongTagAlert = false
     @State private var showCreateTagAlert = false
     @State private var nfcWriteSuccess = false
@@ -31,7 +32,7 @@ struct BrokerView: View {
                             // Check the payload and toggle appBlocker if condition is met
                             if payload == tagPhrase {
                                 NSLog("Toggling block")
-                                appBlocker.toggleBlocking()
+                                appBlocker.toggleBlocking(for: profileManager.currentProfile)
                             } else {
                                 showWrongTagAlert = true
                                 NSLog("Wrong Tag!\nPayload: \(payload)")

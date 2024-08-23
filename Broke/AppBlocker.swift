@@ -13,31 +13,10 @@ class AppBlocker: ObservableObject {
     @Published var isBlocking = false
     @Published var isAuthorized = false
     
-    @Published var appTokens: Set<ApplicationToken> = [] {
-        didSet {
-            saveAppTokens()
-        }
-    }
-    @Published var categoryTokens: Set<ActivityCategoryToken> = [] {
-        didSet {
-            saveCategoryTokens()
-        }
-    }
-    
     init() {
-        loadSavedData()
         Task {
             await requestAuthorization()
         }
-    }
-    
-    private func loadSavedData() {
-        appTokens = loadAppTokens()
-        categoryTokens = loadCategoryTokens()
-        isBlocking = UserDefaults.standard.bool(forKey: "isBlocking")
-        
-        // Apply saved blocking state
-        applyBlockingSettings()
     }
     
     func requestAuthorization() async {
@@ -54,58 +33,24 @@ class AppBlocker: ObservableObject {
         }
     }
     
-    func toggleBlocking() {
+    func toggleBlocking(for profile: Profile) {
         guard isAuthorized else {
             print("Not authorized to block apps")
             return
         }
         
         isBlocking.toggle()
-        applyBlockingSettings()
-        
-        // Save the blocking state
-        UserDefaults.standard.set(isBlocking, forKey: "isBlocking")
+        applyBlockingSettings(for: profile)
     }
     
-    private func applyBlockingSettings() {
+    private func applyBlockingSettings(for profile: Profile) {
         if isBlocking {
-            NSLog("Blocking \(appTokens.count) apps")
-            // Block specified apps and categories
-            store.shield.applications = appTokens.isEmpty ? nil : appTokens
-            store.shield.applicationCategories = categoryTokens.isEmpty ? ShieldSettings.ActivityCategoryPolicy.none : .specific(categoryTokens)
+            NSLog("Blocking \(profile.appTokens.count) apps")
+            store.shield.applications = profile.appTokens.isEmpty ? nil : profile.appTokens
+            store.shield.applicationCategories = profile.categoryTokens.isEmpty ? ShieldSettings.ActivityCategoryPolicy.none : .specific(profile.categoryTokens)
         } else {
-            // Remove all blocks
             store.shield.applications = nil
             store.shield.applicationCategories = ShieldSettings.ActivityCategoryPolicy.none
         }
-    }
-    
-    private func saveAppTokens() {
-        if let encoded = try? JSONEncoder().encode(Array(appTokens)) {
-            UserDefaults.standard.set(encoded, forKey: "appTokens")
-        }
-    }
-    
-    private func saveCategoryTokens() {
-        if let encoded = try? JSONEncoder().encode(Array(categoryTokens)) {
-            UserDefaults.standard.set(encoded, forKey: "categoryTokens")
-        }
-    }
-    
-    private func loadAppTokens() -> Set<ApplicationToken> {
-        guard let data = UserDefaults.standard.data(forKey: "appTokens"),
-              let decodedTokens = try? JSONDecoder().decode([ApplicationToken].self, from: data) else {
-            return []
-        }
-        NSLog("Decoded size: \(decodedTokens)")
-        return Set(decodedTokens)
-    }
-    
-    private func loadCategoryTokens() -> Set<ActivityCategoryToken> {
-        guard let data = UserDefaults.standard.data(forKey: "categoryTokens"),
-              let decodedTokens = try? JSONDecoder().decode([ActivityCategoryToken].self, from: data) else {
-            return []
-        }
-        return Set(decodedTokens)
     }
 }
