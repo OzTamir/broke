@@ -7,18 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F51C38D22C775953003B4EB3 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51C38D02C77594E003B4EB3 /* CoreNFC.framework */; };
+		F51C38D72C775CAF003B4EB3 /* AppBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */; };
+		F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38D82C775CEC003B4EB3 /* NfcReader.swift */; };
+		F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */; };
+		F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */; };
 		F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */; };
-		F5A3B0612C733E3400BD6C7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B0602C733E3400BD6C7F /* ContentView.swift */; };
+		F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A3B0602C733E3400BD6C7F /* MainView.swift */; };
 		F5A3B0632C733E3500BD6C7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A3B0622C733E3500BD6C7F /* Assets.xcassets */; };
 		F5A3B0662C733E3500BD6C7F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A3B0652C733E3500BD6C7F /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F51C38D02C77594E003B4EB3 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
+		F51C38D52C775AAF003B4EB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlocker.swift; sourceTree = "<group>"; };
+		F51C38D82C775CEC003B4EB3 /* NfcReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NfcReader.swift; sourceTree = "<group>"; };
+		F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrockerView.swift; sourceTree = "<group>"; };
+		F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F5A3B05B2C733E3400BD6C7F /* Broke.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Broke.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeApp.swift; sourceTree = "<group>"; };
-		F5A3B0602C733E3400BD6C7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5A3B0602C733E3400BD6C7F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F5A3B0622C733E3500BD6C7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5A3B0652C733E3500BD6C7F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F5A3B06C2C733EA200BD6C7F /* Broke.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Broke.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,17 +38,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F51C38D22C775953003B4EB3 /* CoreNFC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F51C38CF2C77594E003B4EB3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F51C38D02C77594E003B4EB3 /* CoreNFC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F5A3B0522C733E3400BD6C7F = {
 			isa = PBXGroup;
 			children = (
 				F5A3B05D2C733E3400BD6C7F /* Broke */,
 				F5A3B05C2C733E3400BD6C7F /* Products */,
+				F51C38CF2C77594E003B4EB3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,8 +73,14 @@
 		F5A3B05D2C733E3400BD6C7F /* Broke */ = {
 			isa = PBXGroup;
 			children = (
+				F51C38D52C775AAF003B4EB3 /* Info.plist */,
+				F5A3B06C2C733EA200BD6C7F /* Broke.entitlements */,
 				F5A3B05E2C733E3400BD6C7F /* BrokeApp.swift */,
-				F5A3B0602C733E3400BD6C7F /* ContentView.swift */,
+				F5A3B0602C733E3400BD6C7F /* MainView.swift */,
+				F51C38DC2C775D2E003B4EB3 /* SettingsView.swift */,
+				F51C38DA2C775D0B003B4EB3 /* BrockerView.swift */,
+				F51C38D82C775CEC003B4EB3 /* NfcReader.swift */,
+				F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */,
 				F5A3B0622C733E3500BD6C7F /* Assets.xcassets */,
 				F5A3B0642C733E3500BD6C7F /* Preview Content */,
 			);
@@ -95,7 +123,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					F5A3B05A2C733E3400BD6C7F = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -137,8 +165,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A3B0612C733E3400BD6C7F /* ContentView.swift in Sources */,
+				F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */,
+				F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */,
+				F5A3B0612C733E3400BD6C7F /* MainView.swift in Sources */,
+				F51C38DD2C775D2E003B4EB3 /* SettingsView.swift in Sources */,
 				F5A3B05F2C733E3400BD6C7F /* BrokeApp.swift in Sources */,
+				F51C38D72C775CAF003B4EB3 /* AppBlocker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +213,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -241,6 +274,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -264,11 +298,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Broke/Broke.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Broke/Preview Content\"";
+				DEVELOPMENT_TEAM = T9M7HZ29H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Broke/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -292,11 +329,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Broke/Broke.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Broke/Preview Content\"";
+				DEVELOPMENT_TEAM = T9M7HZ29H2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Broke/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
