@@ -15,11 +15,25 @@ class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     var isWriting = false
     var textToWrite: String?
     
+//    func scan(completion: @escaping (String) -> Void) {
+//        self.onScanComplete = completion
+//        self.isWriting = false
+//        startSession()
+//    }
+    
     func scan(completion: @escaping (String) -> Void) {
+        #if targetEnvironment(simulator)
+        // Simulate a valid NFC scan by returning the correct tag phrase after a short delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            completion("BROKE-IS-GREAT")
+        }
+        #else
         self.onScanComplete = completion
         self.isWriting = false
         startSession()
+        #endif
     }
+
     
     func write(_ text: String, completion: @escaping (Bool) -> Void) {
         self.onWriteComplete = completion
