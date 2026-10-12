@@ -7,190 +7,148 @@
 
 import CoreNFC
 
-class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
-    @Published var message = "Waiting for NFC tag..."
-    var session: NFCNDEFReaderSession?
-    var onScanComplete: ((String) -> Void)?
-    var onWriteComplete: ((Bool) -> Void)?
-    var isWriting = false
-    var textToWrite: String?
-    
-    func scan(completion: @escaping (String) -> Void) {
-        self.onScanComplete = completion
-        self.isWriting = false
-        startSession()
+struct TagScan {
+    // First text record on the tag, if any
+    let text: String?
+    // Hardware serial number, which can't be rewritten on genuine NTAG chips
+    let tagID: String
+}
+
+// Uses a tag reader session rather than an NDEF session so we can see the tag's serial number
+class NFCReader: NSObject, ObservableObject, NFCTagReaderSessionDelegate {
+    private var session: NFCTagReaderSession?
+    private var onScanComplete: ((TagScan) -> Void)?
+    private var onWriteComplete: ((String?) -> Void)?
+    private var textToWrite: String?
+
+    static var isAvailable: Bool {
+        NFCTagReaderSession.readingAvailable
     }
-    
-    func write(_ text: String, completion: @escaping (Bool) -> Void) {
-        self.onWriteComplete = completion
-        self.textToWrite = text
-        self.isWriting = true
-        startSession()
+
+    func scan(completion: @escaping (TagScan) -> Void) {
+        onScanComplete = completion
+        textToWrite = nil
+        startSession(message: "Hold your iPhone near your Broker tag.")
     }
-    
-    private func startSession() {
-        guard NFCNDEFReaderSession.readingAvailable else {
+
+    // Completes with the written tag's serial number, or nil on failure
+    func write(_ text: String, completion: @escaping (String?) -> Void) {
+        onWriteComplete = completion
+        textToWrite = text
+        startSession(message: "Hold your iPhone near an NFC tag to write.")
+    }
+
+    private func startSession(message: String) {
+        guard Self.isAvailable else {
             NSLog("NFC is not available on this device")
             return
         }
-        
-        session = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: false)
-        session?.alertMessage = isWriting ? "Hold your iPhone near an NFC tag to write." : "Hold your iPhone near an NFC tag to read."
+
+        session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self, queue: nil)
+        session?.alertMessage = message
         session?.begin()
     }
-    
-    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
-        guard !isWriting else { return }
-        
-        for message in messages {
-            for record in message.records {
-                if record.typeNameFormat == .nfcWellKnown {
-                    if let text = record.wellKnownTypeTextPayload().0 {
-                        DispatchQueue.main.async {
-                            self.message = text
-                            self.onScanComplete?(text)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func readerSession(_ session: NFCNDEFReaderSession, didDetect tags: [NFCNDEFTag]) {
-        if isWriting {
-            handleWriting(session: session, tags: tags)
-        } else {
-            handleReading(session: session, tags: tags)
-        }
-    }
-    
-    private func handleReading(session: NFCNDEFReaderSession, tags: [NFCNDEFTag]) {
-        if tags.count > 1 {
+
+    func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {}
+
+    func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+        guard tags.count == 1, let tag = tags.first else {
             session.alertMessage = "More than 1 tag detected. Please try again with only one tag."
-            session.invalidate()
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
+                session.restartPolling()
+            }
             return
         }
-        
-        let tag = tags.first!
+        guard case let .miFare(miFareTag) = tag else {
+            session.invalidate(errorMessage: "Unsupported tag. Use an NTAG213, 215 or 216.")
+            return
+        }
+
+        let tagID = miFareTag.identifier.map { String(format: "%02x", $0) }.joined()
         session.connect(to: tag) { error in
             if let error = error {
                 session.invalidate(errorMessage: "Connection error: \(error.localizedDescription)")
                 return
             }
-            
-            tag.queryNDEFStatus { status, _, error in
-                if let error = error {
-                    session.invalidate(errorMessage: "Failed to query tag: \(error.localizedDescription)")
-                    return
-                }
-                
-                switch status {
-                case .notSupported:
-                    session.invalidate(errorMessage: "Tag is not NDEF compliant")
-                case .readOnly, .readWrite:
-                    tag.readNDEF { message, error in
-                        if let error = error {
-                            session.invalidate(errorMessage: "Read error: \(error.localizedDescription)")
-                        } else if let message = message {
-                            self.processMessage(message)
-                            session.alertMessage = "Tag read successfully!"
-                            session.invalidate()
-                        } else {
-                            session.invalidate(errorMessage: "No NDEF message found on tag")
-                        }
-                    }
-                @unknown default:
-                    session.invalidate(errorMessage: "Unknown tag status")
-                }
+
+            if let text = self.textToWrite {
+                self.write(text, to: miFareTag, tagID: tagID, session: session)
+            } else {
+                self.read(miFareTag, tagID: tagID, session: session)
             }
         }
     }
-    
-    private func processMessage(_ message: NFCNDEFMessage) {
-        for record in message.records {
-            switch record.typeNameFormat {
-            case .nfcWellKnown:
-                if let text = record.wellKnownTypeTextPayload().0 {
-                    DispatchQueue.main.async {
-                        self.message = text
-                        self.onScanComplete?(text)
-                    }
-                } else if let url = record.wellKnownTypeURIPayload() {
-                    DispatchQueue.main.async {
-                        self.message = url.absoluteString
-                        self.onScanComplete?(url.absoluteString)
-                    }
-                }
-            case .absoluteURI:
-                if let text = String(data: record.payload, encoding: .utf8) {
-                    DispatchQueue.main.async {
-                        self.message = text
-                        self.onScanComplete?(text)
-                    }
-                }
-            default:
-                break
-            }
-        }
-    }
-    
-    private func handleWriting(session: NFCNDEFReaderSession, tags: [NFCNDEFTag]) {
-        guard let tag = tags.first else {
-            session.invalidate(errorMessage: "No tag detected")
-            return
-        }
-        
-        session.connect(to: tag) { error in
+
+    private func read(_ tag: NFCMiFareTag, tagID: String, session: NFCTagReaderSession) {
+        tag.queryNDEFStatus { status, _, error in
             if let error = error {
-                session.invalidate(errorMessage: "Connection error: \(error.localizedDescription)")
+                session.invalidate(errorMessage: "Failed to query tag: \(error.localizedDescription)")
                 return
             }
-            
-            tag.queryNDEFStatus { status, capacity, error in
-                guard error == nil else {
-                    session.invalidate(errorMessage: "Failed to query tag")
-                    return
-                }
-                
-                switch status {
-                case .notSupported:
-                    session.invalidate(errorMessage: "Tag is not NDEF compliant")
-                case .readOnly:
-                    session.invalidate(errorMessage: "Tag is read-only")
-                case .readWrite:
-                    guard let textToWrite = self.textToWrite else {
-                        session.invalidate(errorMessage: "No text to write")
-                        return
-                    }
-                    
-                    let payload = NFCNDEFPayload.wellKnownTypeTextPayload(string: textToWrite, locale: Locale(identifier: "en"))!
-                    let message = NFCNDEFMessage(records: [payload])
-                    
-                    tag.writeNDEF(message) { error in
-                        if let error = error {
-                            session.invalidate(errorMessage: "Write failed: \(error.localizedDescription)")
-                        } else {
-                            session.alertMessage = "Write successful!"
-                            session.invalidate()
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self.onWriteComplete?(error == nil)
-                        }
-                    }
-                @unknown default:
-                    session.invalidate(errorMessage: "Unknown tag status")
+            guard status != .notSupported else {
+                session.invalidate(errorMessage: "Tag is not NDEF compliant")
+                return
+            }
+
+            tag.readNDEF { message, _ in
+                // A blank tag has no message; report it so the app can say it's not a Broker tag
+                let text = message.flatMap(Self.firstText)
+                session.alertMessage = "Tag read successfully!"
+                session.invalidate()
+                DispatchQueue.main.async {
+                    self.onScanComplete?(TagScan(text: text, tagID: tagID))
                 }
             }
         }
     }
-    
-    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
-        if let readerError = error as? NFCReaderError {
-            if (readerError.code != .readerSessionInvalidationErrorFirstNDEFTagRead)
-                && (readerError.code != .readerSessionInvalidationErrorUserCanceled) {
-                NSLog("Session invalidated with error: \(error.localizedDescription)")
+
+    private func write(_ text: String, to tag: NFCMiFareTag, tagID: String, session: NFCTagReaderSession) {
+        tag.queryNDEFStatus { status, _, error in
+            guard error == nil else {
+                session.invalidate(errorMessage: "Failed to query tag")
+                return
             }
+
+            switch status {
+            case .notSupported:
+                session.invalidate(errorMessage: "Tag is not NDEF compliant")
+            case .readOnly:
+                session.invalidate(errorMessage: "Tag is read-only")
+            case .readWrite:
+                let payload = NFCNDEFPayload.wellKnownTypeTextPayload(string: text, locale: Locale(identifier: "en"))!
+                tag.writeNDEF(NFCNDEFMessage(records: [payload])) { error in
+                    if let error = error {
+                        session.invalidate(errorMessage: "Write failed: \(error.localizedDescription)")
+                    } else {
+                        session.alertMessage = "Write successful!"
+                        session.invalidate()
+                    }
+
+                    DispatchQueue.main.async {
+                        self.onWriteComplete?(error == nil ? tagID : nil)
+                    }
+                }
+            @unknown default:
+                session.invalidate(errorMessage: "Unknown tag status")
+            }
+        }
+    }
+
+    // Tags can carry several records; only the first text record matters
+    private static func firstText(in message: NFCNDEFMessage) -> String? {
+        for record in message.records where record.typeNameFormat == .nfcWellKnown {
+            if let text = record.wellKnownTypeTextPayload().0 {
+                return text
+            }
+        }
+        return nil
+    }
+
+    func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
+        if let readerError = error as? NFCReaderError,
+           readerError.code != .readerSessionInvalidationErrorFirstNDEFTagRead,
+           readerError.code != .readerSessionInvalidationErrorUserCanceled {
+            NSLog("Session invalidated with error: \(error.localizedDescription)")
         }
         self.session = nil
     }

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D40000000000000001 /* TagAlarms.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000002 /* TagAlarms.swift */; };
+		A1B2C3D40000000000000003 /* AlarmsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000004 /* AlarmsView.swift */; };
+		B1C2D3E40000000000000001 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000002 /* Shared.swift */; };
+		B1C2D3E40000000000000003 /* TagActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000004 /* TagActions.swift */; };
+		B1C2D3E40000000000000005 /* SchedulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000006 /* SchedulesView.swift */; };
+		B1C2D3E40000000000000007 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000008 /* StatsView.swift */; };
+		B1C2D3E40000000000000009 /* TagSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4000000000000000A /* TagSettingsView.swift */; };
+		B1C2D3E4000000000000000B /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000002 /* Shared.swift */; };
+		B1C2D3E4000000000000000D /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4000000000000000C /* DeviceActivityMonitorExtension.swift */; };
+		B1C2D3E40000000000000011 /* BrokeMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000010 /* BrokeMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F51C38D22C775953003B4EB3 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51C38D02C77594E003B4EB3 /* CoreNFC.framework */; };
 		F51C38D72C775CAF003B4EB3 /* AppBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */; };
 		F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51C38D82C775CEC003B4EB3 /* NfcReader.swift */; };
@@ -20,7 +30,42 @@
 		F5A3B0662C733E3500BD6C7F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5A3B0652C733E3500BD6C7F /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B1C2D3E4000000000000001B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5A3B0532C733E3400BD6C7F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1C2D3E40000000000000016;
+			remoteInfo = BrokeMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B1C2D3E4000000000000001A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B1C2D3E40000000000000011 /* BrokeMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A1B2C3D40000000000000002 /* TagAlarms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagAlarms.swift; sourceTree = "<group>"; };
+		A1B2C3D40000000000000004 /* AlarmsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsView.swift; sourceTree = "<group>"; };
+		B1C2D3E40000000000000002 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
+		B1C2D3E40000000000000004 /* TagActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagActions.swift; sourceTree = "<group>"; };
+		B1C2D3E40000000000000006 /* SchedulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulesView.swift; sourceTree = "<group>"; };
+		B1C2D3E40000000000000008 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		B1C2D3E4000000000000000A /* TagSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingsView.swift; sourceTree = "<group>"; };
+		B1C2D3E4000000000000000C /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
+		B1C2D3E4000000000000000E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B1C2D3E4000000000000000F /* BrokeMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BrokeMonitor.entitlements; sourceTree = "<group>"; };
+		B1C2D3E40000000000000010 /* BrokeMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BrokeMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F51C38D02C77594E003B4EB3 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
 		F51C38D52C775AAF003B4EB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F51C38D62C775CAF003B4EB3 /* AppBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlocker.swift; sourceTree = "<group>"; };
@@ -37,6 +82,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B1C2D3E40000000000000014 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5A3B0582C733E3400BD6C7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,6 +101,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B1C2D3E40000000000000012 /* BrokeMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				B1C2D3E4000000000000000C /* DeviceActivityMonitorExtension.swift */,
+				B1C2D3E4000000000000000E /* Info.plist */,
+				B1C2D3E4000000000000000F /* BrokeMonitor.entitlements */,
+			);
+			path = BrokeMonitor;
+			sourceTree = "<group>";
+		};
 		F51C38CF2C77594E003B4EB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				F5A3B05D2C733E3400BD6C7F /* Broke */,
+				B1C2D3E40000000000000012 /* BrokeMonitor */,
 				F5A3B05C2C733E3400BD6C7F /* Products */,
 				F51C38CF2C77594E003B4EB3 /* Frameworks */,
 			);
@@ -70,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				F5A3B05B2C733E3400BD6C7F /* Broke.app */,
+				B1C2D3E40000000000000010 /* BrokeMonitor.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +152,13 @@
 				F5A3B0622C733E3500BD6C7F /* Assets.xcassets */,
 				F5A3B0642C733E3500BD6C7F /* Preview Content */,
 				F51C38E92C78B47A003B4EB3 /* ProfileFormView.swift */,
+				A1B2C3D40000000000000004 /* AlarmsView.swift */,
+				A1B2C3D40000000000000002 /* TagAlarms.swift */,
+				B1C2D3E40000000000000002 /* Shared.swift */,
+				B1C2D3E40000000000000004 /* TagActions.swift */,
+				B1C2D3E40000000000000006 /* SchedulesView.swift */,
+				B1C2D3E40000000000000008 /* StatsView.swift */,
+				B1C2D3E4000000000000000A /* TagSettingsView.swift */,
 			);
 			path = Broke;
 			sourceTree = "<group>";
@@ -103,6 +174,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B1C2D3E40000000000000016 /* BrokeMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1C2D3E40000000000000017 /* Build configuration list for PBXNativeTarget "BrokeMonitor" */;
+			buildPhases = (
+				B1C2D3E40000000000000013 /* Sources */,
+				B1C2D3E40000000000000014 /* Frameworks */,
+				B1C2D3E40000000000000015 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BrokeMonitor;
+			productName = BrokeMonitor;
+			productReference = B1C2D3E40000000000000010 /* BrokeMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F5A3B05A2C733E3400BD6C7F /* Broke */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5A3B0692C733E3500BD6C7F /* Build configuration list for PBXNativeTarget "Broke" */;
@@ -110,10 +198,12 @@
 				F5A3B0572C733E3400BD6C7F /* Sources */,
 				F5A3B0582C733E3400BD6C7F /* Frameworks */,
 				F5A3B0592C733E3400BD6C7F /* Resources */,
+				B1C2D3E4000000000000001A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B1C2D3E4000000000000001C /* PBXTargetDependency */,
 			);
 			name = Broke;
 			packageProductDependencies = (
@@ -131,8 +221,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
+					B1C2D3E40000000000000016 = {
+						CreatedOnToolsVersion = 27.0;
+					};
 					F5A3B05A2C733E3400BD6C7F = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -155,11 +248,19 @@
 			projectRoot = "";
 			targets = (
 				F5A3B05A2C733E3400BD6C7F /* Broke */,
+				B1C2D3E40000000000000016 /* BrokeMonitor */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B1C2D3E40000000000000015 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5A3B0592C733E3400BD6C7F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -172,11 +273,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B1C2D3E40000000000000013 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1C2D3E4000000000000000D /* DeviceActivityMonitorExtension.swift in Sources */,
+				B1C2D3E4000000000000000B /* Shared.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5A3B0572C733E3400BD6C7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F51C38EA2C78B47A003B4EB3 /* ProfileFormView.swift in Sources */,
+				A1B2C3D40000000000000003 /* AlarmsView.swift in Sources */,
+				A1B2C3D40000000000000001 /* TagAlarms.swift in Sources */,
+				B1C2D3E40000000000000001 /* Shared.swift in Sources */,
+				B1C2D3E40000000000000003 /* TagActions.swift in Sources */,
+				B1C2D3E40000000000000005 /* SchedulesView.swift in Sources */,
+				B1C2D3E40000000000000007 /* StatsView.swift in Sources */,
+				B1C2D3E40000000000000009 /* TagSettingsView.swift in Sources */,
 				F51C38DB2C775D0B003B4EB3 /* BrockerView.swift in Sources */,
 				F51C38D92C775CEC003B4EB3 /* NfcReader.swift in Sources */,
 				F51C38E12C77DADA003B4EB3 /* ProfileManager.swift in Sources */,
@@ -188,7 +305,73 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B1C2D3E4000000000000001C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1C2D3E40000000000000016 /* BrokeMonitor */;
+			targetProxy = B1C2D3E4000000000000001B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B1C2D3E40000000000000018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BrokeMonitor/BrokeMonitor.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C7D34S7545;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BrokeMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BrokeMonitor;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flxclxc.Broke.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B1C2D3E40000000000000019 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = BrokeMonitor/BrokeMonitor.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C7D34S7545;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BrokeMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BrokeMonitor;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flxclxc.Broke.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		F5A3B0672C733E3500BD6C7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -223,6 +406,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T9M7HZ29H2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -245,6 +429,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -284,6 +469,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T9M7HZ29H2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -299,6 +485,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -311,27 +498,33 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Broke/Broke.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Broke/Preview Content\"";
-				DEVELOPMENT_TEAM = T9M7HZ29H2;
+				DEVELOPMENT_TEAM = C7D34S7545;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Broke/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Broke;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "NFC tag to read NDEF messages into the application";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "armv7 nfc";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oztamir.Broke;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flxclxc.Broke;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -348,27 +541,33 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Broke/Broke.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Broke/Preview Content\"";
-				DEVELOPMENT_TEAM = T9M7HZ29H2;
+				DEVELOPMENT_TEAM = C7D34S7545;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Broke/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Broke;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "NFC tag to read NDEF messages into the application";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "armv7 nfc";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oztamir.Broke;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flxclxc.Broke;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -382,6 +581,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B1C2D3E40000000000000017 /* Build configuration list for PBXNativeTarget "BrokeMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1C2D3E40000000000000018 /* Debug */,
+				B1C2D3E40000000000000019 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F5A3B0562C733E3400BD6C7F /* Build configuration list for PBXProject "Broke" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

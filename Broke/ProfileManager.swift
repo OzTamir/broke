@@ -10,6 +10,8 @@ import FamilyControls
 import ManagedSettings
 
 class ProfileManager: ObservableObject {
+    static let shared = ProfileManager()
+
     @Published var profiles: [Profile] = []
     @Published var currentProfileId: UUID?
     
@@ -23,9 +25,9 @@ class ProfileManager: ObservableObject {
     }
     
     func loadProfiles() {
-        if let savedProfiles = UserDefaults.standard.data(forKey: "savedProfiles"),
-           let decodedProfiles = try? JSONDecoder().decode([Profile].self, from: savedProfiles) {
-            profiles = decodedProfiles
+        let savedProfiles = ProfileStore.load()
+        if !savedProfiles.isEmpty {
+            profiles = savedProfiles
         } else {
             // Create a default profile if no profiles are saved
             let defaultProfile = Profile(name: "Default", appTokens: [], categoryTokens: [], icon: "bell.slash")
@@ -33,7 +35,7 @@ class ProfileManager: ObservableObject {
             currentProfileId = defaultProfile.id
         }
         
-        if let savedProfileId = UserDefaults.standard.string(forKey: "currentProfileId"),
+        if let savedProfileId = SharedDefaults.store.string(forKey: "currentProfileId"),
            let uuid = UUID(uuidString: savedProfileId) {
             currentProfileId = uuid
             NSLog("Found currentProfile: \(uuid)")
@@ -44,10 +46,8 @@ class ProfileManager: ObservableObject {
     }
     
     func saveProfiles() {
-        if let encoded = try? JSONEncoder().encode(profiles) {
-            UserDefaults.standard.set(encoded, forKey: "savedProfiles")
-        }
-        UserDefaults.standard.set(currentProfileId?.uuidString, forKey: "currentProfileId")
+        ProfileStore.save(profiles)
+        SharedDefaults.store.set(currentProfileId?.uuidString, forKey: "currentProfileId")
     }
     
     func addProfile(name: String, icon: String = "bell.slash") {
@@ -125,6 +125,7 @@ class ProfileManager: ObservableObject {
         name: String? = nil,
         appTokens: Set<ApplicationToken>? = nil,
         categoryTokens: Set<ActivityCategoryToken>? = nil,
+        webDomainTokens: Set<WebDomainToken>? = nil,
         icon: String? = nil
     ) {
         if let index = profiles.firstIndex(where: { $0.id == id }) {
@@ -136,6 +137,9 @@ class ProfileManager: ObservableObject {
             }
             if let categoryTokens = categoryTokens {
                 profiles[index].categoryTokens = categoryTokens
+            }
+            if let webDomainTokens = webDomainTokens {
+                profiles[index].webDomainTokens = webDomainTokens
             }
             if let icon = icon {
                 profiles[index].icon = icon
@@ -163,26 +167,5 @@ class ProfileManager: ObservableObject {
             }
             saveProfiles()
         }
-    }
-}
-
-struct Profile: Identifiable, Codable {
-    let id: UUID
-    var name: String
-    var appTokens: Set<ApplicationToken>
-    var categoryTokens: Set<ActivityCategoryToken>
-    var icon: String // New property for icon
-
-    var isDefault: Bool {
-        name == "Default"
-    }
-
-    // New initializer to support default icon
-    init(name: String, appTokens: Set<ApplicationToken>, categoryTokens: Set<ActivityCategoryToken>, icon: String = "bell.slash") {
-        self.id = UUID()
-        self.name = name
-        self.appTokens = appTokens
-        self.categoryTokens = categoryTokens
-        self.icon = icon
     }
 }
